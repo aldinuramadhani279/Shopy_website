@@ -119,6 +119,32 @@
                 <p class="lead text-muted">Browse our collection of high-quality items.</p>
             </div>
 
+            <!-- Categories Section -->
+            <div class="container my-5">
+                <h2 class="text-center mb-4">Shop by Category</h2>
+                <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-4 text-center">
+                    @foreach($categories as $category)
+                        <div class="col">
+                            <a href="{{ route('products.index', ['category' => $category->id]) }}" class="text-decoration-none text-dark">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body d-flex flex-column justify-content-center">
+                                        @if($category->image)
+                                            <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" class="img-fluid rounded-circle mb-2 mx-auto" style="width: 80px; height: 80px; object-fit: cover;">
+                                        @else
+                                            <div class="img-fluid rounded-circle mb-2 mx-auto bg-secondary d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                                <i class="bi bi-tag text-white fs-3"></i>
+                                            </div>
+                                        @endif
+                                        <h6 class="card-title mt-2">{{ $category->name }}</h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <!-- End Categories Section -->
+
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <p class="text-muted mb-0">Showing {{ $products->firstItem() }}-{{ $products->lastItem() }} of {{ $products->total() }} results</p>
                 <div>

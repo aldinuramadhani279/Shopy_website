@@ -17,7 +17,7 @@ class ProductController extends Controller
         \Log::info('ProductController@index called with params: ' . json_encode($request->all()));
         
         try {
-            $query = Product::where('is_active', true)->with('category');
+            $query = Product::with('category');
 
             // Search functionality
             if ($request->has('search') && $request->search != '') {

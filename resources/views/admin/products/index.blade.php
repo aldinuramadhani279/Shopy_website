@@ -6,9 +6,66 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Products</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ route('products.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus"></i> Add New Product
-        </a>
+                    <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">Add New Product</a>
+
+                    <form action="{{ route('admin.products.index') }}" method="GET" class="mb-3">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Search products..." value="{{ request('search') }}">
+                            <button class="btn btn-outline-secondary" type="submit">Search</button>
+                        </div>
+                    </form>
+
+                    <form action="{{ route('admin.products.toggle-active') }}" method="POST">
+                        @csrf
+                        <div class="d-flex justify-content-between mb-3">
+                            <div>
+                                <button type="submit" name="action" value="activate" class="btn btn-success">Activate Selected</button>
+                                <button type="submit" name="action" value="deactivate" class="btn btn-warning">Deactivate Selected</button>
+                            </div>
+                        </div>
+
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="50"><input type="checkbox" id="select-all"></th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($products as $product)
+                                    <tr>
+                                        <td><input type="checkbox" name="ids[]" value="{{ $product->id }}"></td>
+                                        <td>
+                                            @if($product->image)
+                                                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" width="60">
+                                            @else
+                                                <span class="text-muted">No Image</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $product->name }}</td>
+                                        <td>{{ $product->category->name ?? 'N/A' }}</td>
+                                        <td>${{ number_format($product->price, 2) }}</td>
+                                        <td>{{ $product->stock }}</td>
+                                        <td>
+                                            <span class="badge bg-{{ $product->is_active ? 'success' : 'secondary' }}">
+                                                {{ $product->is_active ? 'Active' : 'Inactive' }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
     </div>
 </div>
 

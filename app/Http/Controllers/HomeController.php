@@ -17,8 +17,7 @@ class HomeController extends Controller
     {
         try {
             // Get latest products
-            $latestProducts = Product::where('is_active', true)
-                                    ->latest()
+            $latestProducts = Product::latest()
                                     ->take(8)
                                     ->get();
 
@@ -27,7 +26,6 @@ class HomeController extends Controller
                                         ->join('order_items', 'products.id', '=', 'order_items.product_id')
                                         ->groupBy('products.id')
                                         ->orderByDesc('total_sold')
-                                        ->where('products.is_active', true)
                                         ->take(8)
                                         ->get();
 

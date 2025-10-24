@@ -10,9 +10,55 @@
             <button type="button" class="btn btn-sm btn-outline-secondary" id="activate-selected">Activate Selected</button>
             <button type="button" class="btn btn-sm btn-outline-secondary" id="deactivate-selected">Deactivate Selected</button>
         </div>
-        <a href="{{ route('categories.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus"></i> Add New Category
-        </a>
+                    <a href="{{ route('admin.categories.create') }}" class="btn btn-primary mb-3">Add New Category</a>
+
+                    <form action="{{ route('admin.categories.toggle-active') }}" method="POST">
+                        @csrf
+                        <div class="d-flex justify-content-between mb-3">
+                            <div>
+                                <button type="submit" name="action" value="activate" class="btn btn-success">Activate Selected</button>
+                                <button type="submit" name="action" value="deactivate" class="btn btn-warning">Deactivate Selected</button>
+                            </div>
+                        </div>
+
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="50"><input type="checkbox" id="select-all"></th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Slug</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($categories as $category)
+                                    <tr>
+                                        <td><input type="checkbox" name="ids[]" value="{{ $category->id }}"></td>
+                                        <td>
+                                            @if($category->image)
+                                                <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" width="60">
+                                            @else
+                                                <span class="text-muted">No Image</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $category->name }}</td>
+                                        <td>{{ $category->slug }}</td>
+                                        <td>
+                                            <span class="badge bg-{{ $category->is_active ? 'success' : 'secondary' }}">
+                                                {{ $category->is_active ? 'Active' : 'Inactive' }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                            <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this category?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
     </div>
 </div>
 

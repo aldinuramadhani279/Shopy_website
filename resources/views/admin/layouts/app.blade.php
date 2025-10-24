@@ -34,16 +34,8 @@
                                 <i class="bi bi-speedometer2 me-2"></i>Dashboard
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white {{ request()->is('admin/products*') ? 'active' : '' }}" href="{{ route('products.index') }}">
-                                <i class="bi bi-box-seam me-2"></i>Products
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white {{ request()->is('admin/categories*') ? 'active' : '' }}" href="{{ route('categories.index') }}">
-                                <i class="bi bi-tags me-2"></i>Categories
-                            </a>
-                        </li>
+                        <a class="nav-link" href="{{ route('admin.products.index') }}">Products</a>
+                        <a class="nav-link" href="{{ route('admin.categories.index') }}">Categories</a>
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->is('admin/orders*') ? 'active' : '' }}" href="{{ route('orders.index') }}">
                                 <i class="bi bi-cart me-2"></i>Orders

@@ -63,6 +63,10 @@ This is a complete e-commerce system built with Laravel that includes both front
 - Fixed undefined route errors for all admin panel sections (products, categories, orders, customers, reviews, coupons)
 - Corrected route naming inconsistencies throughout the application
 - Updated view templates to use proper route references
+- **Resolved Route Name Collision**: Fixed a critical issue where admin and frontend product/category routes conflicted by uniquely naming admin routes (e.g., `admin.products.index`).
+- **Enhanced Frontend Navigation**: Renamed 'Home' to 'Product' and 'Products' to 'Category' in the navbar.
+- **Dedicated Category Gallery Page**: Implemented a new, visually appealing `/categories` page displaying only category cards, linking to filtered product lists.
+- **Language Consistency**: Ensured all frontend text is consistently in English.
 
 ### Database Schema Fixes
 - Updated reviews table schema to use appropriate column names

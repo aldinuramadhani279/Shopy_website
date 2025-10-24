@@ -31,5 +31,37 @@
             <a href="{{ route('products.index') }}" class="btn btn-light btn-lg">Explore Products</a>
         </div>
     </div>
+
+    <!-- Latest Products -->
+    <div class="mt-5">
+        <h2 class="text-center mb-4">Latest Products</h2>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            @forelse($latestProducts as $product)
+            <div class="col">
+                @include('frontend.products._product_list_item', ['product' => $product])
+            </div>
+            @empty
+            <div class="col-12">
+                <p class="text-center text-muted">No latest products to show.</p>
+            </div>
+            @endforelse
+        </div>
+    </div>
+
+    <!-- Best Selling Products -->
+    <div class="my-5">
+        <h2 class="text-center mb-4">Best Selling Products</h2>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            @forelse($bestSellingProducts as $product)
+            <div class="col">
+                @include('frontend.products._product_list_item', ['product' => $product])
+            </div>
+            @empty
+            <div class="col-12">
+                <p class="text-center text-muted">No best-selling products to show.</p>
+            </div>
+            @endforelse
+        </div>
+    </div>
 </div>
 @endsection

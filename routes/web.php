@@ -41,8 +41,10 @@ Route::post('/register', [RegisterController::class, 'register']);
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Category Routes
-Route::get('/categories', [FrontendProductController::class, 'categories'])->name('categories.index');
+Route::get('/categories', [ProductController::class, 'categories'])->name('categories.index');
+
+// Fallback route for 404
+
 
 // Product Routes
 Route::get('/products', [FrontendProductController::class, 'index'])->name('products.index');
@@ -85,11 +87,23 @@ Route::prefix('admin')->middleware(['auth', 'ensure.admin'])->group(function () 
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     
     // Product Management
-    Route::resource('products', ProductController::class);
+    Route::get('products', [ProductController::class, 'index'])->name('admin.products.index');
+    Route::get('products/create', [ProductController::class, 'create'])->name('admin.products.create');
+    Route::post('products', [ProductController::class, 'store'])->name('admin.products.store');
+    Route::get('products/{product}', [ProductController::class, 'show'])->name('admin.products.show');
+    Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
+    Route::put('products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
+    Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
     Route::post('products/toggle-active', [ProductController::class, 'toggleActive'])->name('admin.products.toggle-active');
     
     // Category Management
-    Route::resource('categories', CategoryController::class);
+    Route::get('categories', [CategoryController::class, 'index'])->name('admin.categories.index');
+    Route::get('categories/create', [CategoryController::class, 'create'])->name('admin.categories.create');
+    Route::post('categories', [CategoryController::class, 'store'])->name('admin.categories.store');
+    Route::get('categories/{category}', [CategoryController::class, 'show'])->name('admin.categories.show');
+    Route::get('categories/{category}/edit', [CategoryController::class, 'edit'])->name('admin.categories.edit');
+    Route::put('categories/{category}', [CategoryController::class, 'update'])->name('admin.categories.update');
+    Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
     Route::post('categories/toggle-active', [CategoryController::class, 'toggleActive'])->name('admin.categories.toggle-active');
     
     // Order Management

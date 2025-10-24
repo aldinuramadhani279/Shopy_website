@@ -26,8 +26,9 @@
                     
                     <!-- Navigation -->
                     <nav class="d-flex align-items-center">
-                        <a href="{{ route('home') }}" class="text-white text-decoration-none me-3">Home</a>
-                        <a href="{{ route('products.index') }}" class="text-white text-decoration-none me-3">Products</a>
+                        <a href="{{ route('home') }}" class="text-white text-decoration-none me-3">Product</a>
+
+                        <a href="{{ route('products.index') }}" class="text-white text-decoration-none me-3">Category</a>
                         
                         @auth
                             @if(auth()->user()->role === 'admin')
